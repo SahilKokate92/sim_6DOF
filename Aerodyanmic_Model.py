@@ -5,7 +5,7 @@ class AerodynamicsModel:
         self.parameters = parameters
 
 
-    def forcesAndMoments(self,Vt,alpha,beta,p,q,r,de,da,dr,rho):
+    def FM_aero(self,Vt,alpha,beta,p,q,r,de,da,dr,rho):
         self.Vt = Vt
         self.alpha = alpha
         self.beta = beta
@@ -32,9 +32,12 @@ class AerodynamicsModel:
         self.Cm = (self.parameters.Cm0) + (self.parameters.Cm_alpha*alpha) + (self.parameters.Cm_q*self.q_hat) + (self.parameters.Cm_de*de)
         self.Cn = (self.parameters.Cn_beta*beta) + (self.parameters.Cn_p*self.p_hat) + (self.parameters.Cn_r*self.r_hat) + (self.parameters.Cn_da*da) + (self.parameters.Cn_r*dr)
 
-        
+        # Computing Aerodynamic Forces and Moments
+        self.q_dynamic = 0.5 * rho * Vt**2
+        self.L_aeroF = self.q_dynamic * self.parameters.S * self.CL
+        self.D_aeroF = self.q_dynamic * self.parameters.S * self.CD
+        self.Y_aerof = self.q_dynamic * self.parameters.S * self.CY
 
-
-         
-
-      
+        self.L_aeroM = self.q_dynamic * self.parameters.S * self.parameters.b * self.Cl
+        self.M_aeroM = self.q_dynamic * self.parameters.S * self.parameters.c_bar * self.Cm
+        self.N_aeroM = self.q_dynamic * self.parameters.S * self.parameters.b * self.Cn
