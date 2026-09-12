@@ -2,7 +2,7 @@ from dataclasses import dataclass
 
 @dataclass(frozen=True) 
 
-class Parameters:
+class AircraftParameters:
     # Mass and Interntia properties
     m : float
     Ixx : float
