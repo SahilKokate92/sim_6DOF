@@ -2,13 +2,6 @@
 import math
 class Atmosphere:
 
-    T0 = 288.15 # K
-    P0 = 101325 # Pa
-    Rho0 = 1.225 # Kg/m^3
-    L = -0.0065 # K/m
-    R = 287.05 # J/(Kg*K)
-    g = 9.80665 # m/s^2
-
     def __init__(self, h:float):
         
 
