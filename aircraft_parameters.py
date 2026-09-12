@@ -23,7 +23,11 @@ class AircraftParameters:
 
     CD0 : float
     CD_alpha : float
+    CD_q : float
+    CD_de : float
 
+    Cm0 : float
+    Cm_alpha : float
     Cm_q : float
     Cm_de : float
 
