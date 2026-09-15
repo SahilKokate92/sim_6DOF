@@ -49,4 +49,5 @@ class AerodynamicsModel:
         self.Fy_aero = -self.D_aeroF * np.sin(beta) + self.Y_aerof * np.cos(beta)
         self.Fz_aero = -self.D_aeroF * np.sin(alpha)*np.cos(beta) - self.Y_aerof*np.sin(alpha)*np.sin(beta) - self.L_aeroM * np.cos(alpha)
 
-         
+        return self.Fx_aero, self.Fy_aero, self.Fz_aero, self.L_aeroM, self.M_aeroM, self.N_aeroM
+    
