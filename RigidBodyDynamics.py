@@ -17,7 +17,7 @@ class FlightDynamics:
         u, v, w, p, q, r, phi, theta, psi, PN, PE, PD = x
         del_e, del_a, del_r, del_t = controls
 
-        h = PD
+        h = -PD
         rho = Atmosphere(h).rho
 
         Vt = np.sqrt([u**2 + v**2 + w**2])
@@ -25,3 +25,27 @@ class FlightDynamics:
         alpha = np.atan(w/u)
 
         beta = np.asin(v/Vt)
+
+
+        # extracting forces and moments 
+        # Aero forces and moments
+        Fx_aero = self.aerodynamics.Fx_aero
+        Fy_aero = self.aerodynamics.Fy_aero
+        Fz_aero = self.aerodynamics.Fz_aero
+        L_aeroM = self.aerodynamics.L_aeroM 
+        M_aeroM = self.aerodynamics.M_aeroM 
+        N_aeroM = self.aerodynamics.N_aeroM
+
+        # Propulsive forces and moments 
+        Fx_prop = self.propulsion.Fx_prop
+        Fy_prop = self.propulsion.Fy_prop
+        Fz_prop = self.propulsion.Fz_prop
+        Mx_prop = self.propulsion.Mx_prop
+        My_prop = self.propulsion.My_prop
+        Mz_prop = self.propulsion.Mz_prop
+
+
+
+
+
+
