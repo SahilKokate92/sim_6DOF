@@ -9,6 +9,8 @@ class AircraftParameters:
     Iyy : float
     Izz : float
     Ixy : float
+    Ixz : float
+    Iyz : float
 
     # geomery
     S : float
