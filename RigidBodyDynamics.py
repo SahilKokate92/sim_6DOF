@@ -44,6 +44,23 @@ class FlightDynamics:
         My_prop = self.propulsion.My_prop
         Mz_prop = self.propulsion.Mz_prop
 
+        # Gravity forces
+        m = self.parameters.m
+        g = 9.81
+
+        Fx_grav = -m*g*np.sin(theta)
+        Fy_grav = m*g*np.sin(phi)*np.cos(theta)
+        Fz_grav = m*g*np.cos(phi)*np.cos(theta)
+
+        # Total forces and Moments
+        Fx = Fx_aero + Fx_prop + Fx_grav
+        Fy = Fy_aero + Fy_prop + Fy_grav
+        Fz = Fz_aero + Fz_prop + Fz_prop
+
+        Mx = L_aeroM + Mx_prop 
+        My = M_aeroM + My_prop
+        Mz = N_aeroM + Mz_prop
+
 
 
 
