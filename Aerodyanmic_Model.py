@@ -6,16 +6,16 @@ class AerodynamicsModel:
         self.parameters = parameters
 
 
-    def FM_aero(self,Vt,alpha,beta,p,q,r,de,da,dr,rho):
+    def FM_aero(self,Vt,alpha,beta,p,q,r,del_e,del_a,del_r,rho):
         self.Vt = Vt
         self.alpha = alpha
         self.beta = beta
         self.p = p
         self.q = q
         self.r = r
-        self.de = de
-        self.da = da
-        self.dr = dr
+        self.de = del_e
+        self.da = del_a
+        self.dr = del_r
         self.rho = rho
 
         # computing damping coefficients
@@ -24,14 +24,14 @@ class AerodynamicsModel:
         self.r_hat = (r*self.parameters.b)/(2*Vt)
 
         # Computation of Aerodynamics force coefficients
-        self.CL = (self.parameters.CL0) + (self.parameters.CL_alpha*alpha) + (self.parameters.CL_q*self.p_hat) + (self.parameters.CL_de*de)
-        self.CD = (self.parameters.CD0) + (self.parameters.CD_alpha*alpha) + (self.parameters.CD_q*self.q_hat) + (self.parameters.CD_de*de)
-        self.CY = (self.parameters.CY_beta*beta) + (self.parameters.CY_p*self.p_hat) + (self.parameters.CY_r*self.r_hat) + (self.parameters.CY_da*da) + (self.parameters.CY_dr*dr)
+        self.CL = (self.parameters.CL0) + (self.parameters.CL_alpha*alpha) + (self.parameters.CL_q*self.p_hat) + (self.parameters.CL_de*del_e)
+        self.CD = (self.parameters.CD0) + (self.parameters.CD_alpha*alpha) + (self.parameters.CD_q*self.q_hat) + (self.parameters.CD_de*del_e)
+        self.CY = (self.parameters.CY_beta*beta) + (self.parameters.CY_p*self.p_hat) + (self.parameters.CY_r*self.r_hat) + (self.parameters.CY_da*del_a) + (self.parameters.CY_dr*del_r)
 
         # Moment coefficents 
-        self.Cl = (self.parameters.Cl_beta*beta) + (self.parameters.Cl_p*self.p_hat) + (self.parameters.Cl_r*self.r_hat) + (self.parameters.Cl_da*da) + (self.parameters.Cl_dr*dr)
-        self.Cm = (self.parameters.Cm0) + (self.parameters.Cm_alpha*alpha) + (self.parameters.Cm_q*self.q_hat) + (self.parameters.Cm_de*de)
-        self.Cn = (self.parameters.Cn_beta*beta) + (self.parameters.Cn_p*self.p_hat) + (self.parameters.Cn_r*self.r_hat) + (self.parameters.Cn_da*da) + (self.parameters.Cn_r*dr)
+        self.Cl = (self.parameters.Cl_beta*beta) + (self.parameters.Cl_p*self.p_hat) + (self.parameters.Cl_r*self.r_hat) + (self.parameters.Cl_da*del_a) + (self.parameters.Cl_dr*del_r)
+        self.Cm = (self.parameters.Cm0) + (self.parameters.Cm_alpha*alpha) + (self.parameters.Cm_q*self.q_hat) + (self.parameters.Cm_de*del_e)
+        self.Cn = (self.parameters.Cn_beta*beta) + (self.parameters.Cn_p*self.p_hat) + (self.parameters.Cn_r*self.r_hat) + (self.parameters.Cn_da*del_a) + (self.parameters.Cn_r*del_r)
 
         # Computing Aerodynamic Forces and Moments
         self.q_dynamic = 0.5 * rho * Vt**2
@@ -43,7 +43,7 @@ class AerodynamicsModel:
         self.M_aeroM = self.q_dynamic * self.parameters.S * self.parameters.c_bar * self.Cm
         self.N_aeroM = self.q_dynamic * self.parameters.S * self.parameters.b * self.Cn
 
-        # Wind axis to Body axis forces transformation
+        # Wind axis to Body axis forces tranformation
 
         self.Fx_aero = -self.D_aeroF * np.cos(alpha)*np.cos(beta) - self.Y_aerof * np.cos(alpha)*np.sin(beta) + self.L_aeroM * np.sin(alpha)
         self.Fy_aero = -self.D_aeroF * np.sin(beta) + self.Y_aerof * np.cos(beta)
