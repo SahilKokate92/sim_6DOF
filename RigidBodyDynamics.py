@@ -61,6 +61,37 @@ class FlightDynamics:
         My = M_aeroM + My_prop
         Mz = N_aeroM + Mz_prop
 
+        # Translation dynamics
+        u_dot = r*v - q*w + (Fx/m)
+        v_dot = p*w - r*u + (Fy/m)
+        w_dot = q*u - p*v + (Fz/m)
+
+        # Inertia matrix
+        Ixx = self.parameters.Ixx
+        Iyy = self.parameters.Iyy
+        Izz = self.parameters.Izz
+        Ixy = self.parameters.Ixy
+        Ixz = self.parameters.Ixz
+        Iyz = self.parameters.Iyz
+
+        I = np.array([
+            [Ixx, -Ixy, -Ixz],
+            [-Ixy, Iyy, -Iyz],
+            [-Ixz, -Iyz, Izz]
+        ])
+
+        gamma = Ixx*Izz-Ixz**2
+
+        # rotational dynamics
+        p_dot = ( Izz*L_aeroM + Ixz*N_aeroM + Ixz*(Ixx-Iyy+Izz)*p*q - (Izz*(Izz-Iyy)+Ixz**2)*q*r ) / gamma
+        q_dot = ( M_aeroM + (Izz+Ixx)*p*r + Ixz*(r**2 - p**2) ) / Iyy
+        r_dot = ( Ixz*L_aeroM + Ixx*N_aeroM + ((Ixx-Iyy)*Ixx + Ixz**2)*p*q + Ixz*(-Ixx + Iyy - Izz)*q*r ) / gamma
+
+
+
+
+
+
 
 
 
