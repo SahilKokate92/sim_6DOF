@@ -1,4 +1,5 @@
 from aircraft_parameters import AircraftParameters
+import numpy as np
 
 class AerodynamicsModel:
     def __init__(self, parameters : AircraftParameters):
@@ -41,3 +42,11 @@ class AerodynamicsModel:
         self.L_aeroM = self.q_dynamic * self.parameters.S * self.parameters.b * self.Cl
         self.M_aeroM = self.q_dynamic * self.parameters.S * self.parameters.c_bar * self.Cm
         self.N_aeroM = self.q_dynamic * self.parameters.S * self.parameters.b * self.Cn
+
+        # Wind axis to Body axis forces transformation
+
+        self.Fx_aero = -self.D_aeroF * np.cos(alpha)*np.cos(beta) - self.Y_aerof * np.cos(alpha)*np.sin(beta) + self.L_aeroM * np.sin(alpha)
+        self.Fy_aero = -self.D_aeroF * np.sin(beta) + self.Y_aerof * np.cos(beta)
+        self.Fz_aero = -self.D_aeroF * np.sin(alpha)*np.cos(beta) - self.Y_aerof*np.sin(alpha)*np.sin(beta) - self.L_aeroM * np.cos(alpha)
+
+         
