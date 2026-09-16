@@ -2,6 +2,7 @@ from atmosphere import Atmosphere
 from aircraft_parameters import AircraftParameters
 from Aerodyanmic_Model import AerodynamicsModel
 from PropulsionModel import PropulsionModel
+from kinematics import R, H
 
 import numpy as np
 
@@ -86,6 +87,20 @@ class FlightDynamics:
         p_dot = ( Izz*L_aeroM + Ixz*N_aeroM + Ixz*(Ixx-Iyy+Izz)*p*q - (Izz*(Izz-Iyy)+Ixz**2)*q*r ) / gamma
         q_dot = ( M_aeroM + (Izz+Ixx)*p*r + Ixz*(r**2 - p**2) ) / Iyy
         r_dot = ( Ixz*L_aeroM + Ixx*N_aeroM + ((Ixx-Iyy)*Ixx + Ixz**2)*p*q + Ixz*(-Ixx + Iyy - Izz)*q*r ) / gamma
+
+        # euler angle rate
+        phi_dot, theta_dot, psi_dot = H @ np.array([u, v, w])
+
+        # position
+        PN_dot, PE_dot, PD_hot = R @ np.array([p, q, r])
+
+
+
+
+
+
+
+        
 
 
 
