@@ -22,27 +22,18 @@ class FlightDynamics:
 
         Vt = np.sqrt(u**2 + v**2 + w**2)
 
-        alpha = np.atan(w/u)
+        alpha = np.arctan2(w,u)
 
-        beta = np.asin(v/Vt)
+        beta = np.arcsin(v/Vt)
 
 
         # extracting forces and moments 
         # Aero forces and moments
-        Fx_aero = self.aerodynamics.Fx_aero
-        Fy_aero = self.aerodynamics.Fy_aero
-        Fz_aero = self.aerodynamics.Fz_aero
-        L_aeroM = self.aerodynamics.L_aeroM 
-        M_aeroM = self.aerodynamics.M_aeroM 
-        N_aeroM = self.aerodynamics.N_aeroM
-
-        # Propulsive forces and moments 
-        Fx_prop = self.propulsion.Fx_prop
-        Fy_prop = self.propulsion.Fy_prop
-        Fz_prop = self.propulsion.Fz_prop
-        Mx_prop = self.propulsion.Mx_prop
-        My_prop = self.propulsion.My_prop
-        Mz_prop = self.propulsion.Mz_prop
+        Fx_aero, Fy_aero, Fz_aero, L_aeroM, M_aeroM, N_aeroM = self.aerodynamics.FM_aero(
+        Vt, alpha, beta, p, q, r, del_e, del_a, del_r, rho)
+                                                      
+        Fx_prop, Fy_prop, Fz_prop = self.propulsion.compute_thrust(del_t)
+        Mx_prop, My_prop, Mz_prop = 0, 0, 0
 
         # Gravity forces
         m = self.parameters.m
@@ -70,28 +61,20 @@ class FlightDynamics:
         Ixx = self.parameters.Ixx
         Iyy = self.parameters.Iyy
         Izz = self.parameters.Izz
-        Ixy = self.parameters.Ixy
         Ixz = self.parameters.Ixz
-        Iyz = self.parameters.Iyz
-
-        I = np.array([
-            [Ixx, -Ixy, -Ixz],
-            [-Ixy, Iyy, -Iyz],
-            [-Ixz, -Iyz, Izz]
-        ])
 
         gamma = Ixx*Izz-Ixz**2
 
         # rotational dynamics
-        p_dot = ( Izz*L_aeroM + Ixz*N_aeroM + Ixz*(Ixx-Iyy+Izz)*p*q - (Izz*(Izz-Iyy)+Ixz**2)*q*r ) / gamma
-        q_dot = ( M_aeroM + (Izz+Ixx)*p*r + Ixz*(r**2 - p**2) ) / Iyy
-        r_dot = ( Ixz*L_aeroM + Ixx*N_aeroM + ((Ixx-Iyy)*Ixx + Ixz**2)*p*q + Ixz*(-Ixx + Iyy - Izz)*q*r ) / gamma
+        p_dot = ( Izz*Mx + Ixz*Mz + Ixz*(Ixx-Iyy+Izz)*p*q - (Izz*(Izz-Iyy)+Ixz**2)*q*r ) / gamma
+        q_dot = ( My + (Izz - Ixx)*p*r + Ixz*(r**2 - p**2) ) / Iyy
+        r_dot = ( Ixz*Mx + Ixx*Mz + ((Ixx-Iyy)*Ixx + Ixz**2)*p*q + Ixz*(-Ixx + Iyy - Izz)*q*r ) / gamma
 
         # euler angle rate
-        phi_dot, theta_dot, psi_dot = H @ np.array([u, v, w])
+        phi_dot, theta_dot, psi_dot = H(phi,theta) @ np.array([p, q, r])
 
         # position
-        PN_dot, PE_dot, PD_dot = R @ np.array([p, q, r])
+        PN_dot, PE_dot, PD_dot = R(phi,theta,psi) @ np.array([u, v, w])
 
         x_dot = np.array([u_dot, v_dot, w_dot, p_dot, q_dot, r_dot, phi_dot, theta_dot, psi_dot, PN_dot, PE_dot, PD_dot])
 
