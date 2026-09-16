@@ -3,7 +3,6 @@ from aircraft_parameters import AircraftParameters
 from Aerodyanmic_Model import AerodynamicsModel
 from PropulsionModel import PropulsionModel
 from kinematics import R, H
-
 import numpy as np
 
 
@@ -92,7 +91,13 @@ class FlightDynamics:
         phi_dot, theta_dot, psi_dot = H @ np.array([u, v, w])
 
         # position
-        PN_dot, PE_dot, PD_hot = R @ np.array([p, q, r])
+        PN_dot, PE_dot, PD_dot = R @ np.array([p, q, r])
+
+        x_dot = np.array([u_dot, v_dot, w_dot, p_dot, q_dot, r_dot, phi_dot, theta_dot, psi_dot, PN_dot, PE_dot, PD_dot])
+
+        return x_dot
+
+
 
 
 
