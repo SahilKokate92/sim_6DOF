@@ -21,7 +21,7 @@ class FlightDynamics:
         h = -PD
         rho = Atmosphere(h).rho
 
-        Vt = np.sqrt([u**2 + v**2 + w**2])
+        Vt = np.sqrt(u**2 + v**2 + w**2)
 
         alpha = np.atan(w/u)
 
@@ -56,7 +56,7 @@ class FlightDynamics:
         # Total forces and Moments
         Fx = Fx_aero + Fx_prop + Fx_grav
         Fy = Fy_aero + Fy_prop + Fy_grav
-        Fz = Fz_aero + Fz_prop + Fz_prop
+        Fz = Fz_aero + Fz_prop + Fz_grav
 
         Mx = L_aeroM + Mx_prop 
         My = M_aeroM + My_prop
