@@ -14,6 +14,6 @@ class Atmosphere:
         gamma = 1.4
 
         self.T = T0 + L * h
-        self.P = P0 * (self.T / T0) ** (g / (L * R))
+        self.P = P0 * (self.T / T0) ** (-g / (L * R))
         self.rho = self.P / (R*self.T)
         self.a = math.sqrt(gamma * R * self.T)
