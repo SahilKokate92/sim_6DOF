@@ -14,7 +14,7 @@ def H(phi,theta):
     H = np.array([
         [1, np.sin(phi)*np.tan(theta), np.cos(phi)*np.tan(theta)],
         [0, np.cos(phi), -np.sin(phi)],
-        [0, np.sin(phi)*np.sec(theta), np.cos(phi)*np.sec(theta)]
+        [0, np.sin(phi)/np.cos(theta), np.cos(phi)/np.cos(theta)]
     ])
 
     return H
