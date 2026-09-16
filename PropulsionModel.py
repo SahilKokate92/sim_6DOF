@@ -9,5 +9,5 @@ class PropulsionModel:
            self.Mx_prop = 0
            self.My_prop = 0
            self.Mz_prop = 0
-           return self.Fx_prop, self.Fy_prop, self.Fz_prop, self.Mx_prop, self.My_prop, self.Mz_prop
+           return self.Fx_prop, self.Fy_prop, self.Fz_prop
     
