@@ -11,7 +11,7 @@ parameters = AircraftParameters()
 
 aerodynamics = AerodynamicsModel(parameters)
 
-propulsion = PropulsionModel(parameters)
+propulsion = PropulsionModel(T_max=1800)
 
 flight_dynamics = FlightDynamics(
     parameters,
@@ -42,7 +42,7 @@ controls = np.array([
     0.0,        # delta_e
     0.0,        # delta_a
     0.0,        # delta_r
-    0.0         # delta_t
+    1         # delta_t
 ], dtype=float)
 
 integrator = RK4Integrator(
