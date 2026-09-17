@@ -1,4 +1,6 @@
 import numpy as np
+from results import PostProcessor
+import matplotlib.pyplot as plt
 
 from aircraft_parameters import AircraftParameters
 from Aerodyanmic_Model import AerodynamicsModel
@@ -20,7 +22,7 @@ flight_dynamics = FlightDynamics(
 )
 
 x0 = np.array([
-    30.0,       # u
+    55.0,       # u
     0.0,        # v
     0.0,        # w
 
@@ -86,3 +88,8 @@ print(f"PE    = {state_history[-1, 10]:.6f} m")
 print(f"PD    = {state_history[-1, 11]:.6f} m")
 
 print("---------------------------------------")
+
+pp = PostProcessor(time, state_history)
+pp.plot_dashboard(save_path="fig_result.png") 
+
+plt.show()
