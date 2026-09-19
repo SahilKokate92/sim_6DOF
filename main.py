@@ -36,7 +36,7 @@ x0 = np.array([
 
     0.0,        # PN
     0.0,        # PE
-    0.0         # PD
+    1000        # PD
 
 ], dtype=float)
 
@@ -44,7 +44,7 @@ controls = np.array([
     0.0,        # delta_e
     0.0,        # delta_a
     0.0,        # delta_r
-    1         # delta_t
+    0.65         # delta_t
 ], dtype=float)
 
 integrator = RK4Integrator(
