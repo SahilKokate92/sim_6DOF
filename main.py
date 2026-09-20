@@ -22,7 +22,7 @@ flight_dynamics = FlightDynamics(
 )
 
 x0 = np.array([
-    50.0,       # u
+    60,       # u
     0.0,        # v
     0.0,        # w
 
