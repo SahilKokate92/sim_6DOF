@@ -22,7 +22,7 @@ flight_dynamics = FlightDynamics(
 )
 
 x0 = np.array([
-    55.0,       # u
+    60.0,       # u
     0.0,        # v
     0.0,        # w
 
@@ -31,7 +31,7 @@ x0 = np.array([
     0.0,        # r
 
     0.0,        # phi
-    0.0,        # theta
+    np.radians(0.1346),        # theta
     0.0,        # psi
 
     0.0,        # PN
@@ -41,10 +41,10 @@ x0 = np.array([
 ], dtype=float)
 
 controls = np.array([
-    0.0,        # delta_e
+    np.radians(-0.7651),        # delta_e
     0.0,        # delta_a
     0.0,        # delta_r
-    0.65         # delta_t
+    0.5482         # delta_t
 ], dtype=float)
 
 integrator = RK4Integrator(
