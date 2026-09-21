@@ -56,7 +56,7 @@ simulation = Simulation(
     integrator=integrator,
     initial_state=x0,
     controls=controls,
-    t_final=20.0
+    t_final=100.0
 )
 
 time, state_history = simulation.run()
