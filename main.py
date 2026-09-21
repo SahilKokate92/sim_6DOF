@@ -36,7 +36,7 @@ x0 = np.array([
 
     0.0,        # PN
     0.0,        # PE
-    1000        # PD
+    -1000        # PD
 
 ], dtype=float)
 
@@ -56,7 +56,7 @@ simulation = Simulation(
     integrator=integrator,
     initial_state=x0,
     controls=controls,
-    t_final=100.0
+    t_final=20.0
 )
 
 time, state_history = simulation.run()

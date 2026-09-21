@@ -101,7 +101,7 @@ class PostProcessor:
 
     def plot_altitude(self, ax=None):
         ax = ax or plt.subplots()[1]
-        ax.plot(self.t, self.PD)
+        ax.plot(self.t, -self.PD)
         ax.set_xlabel('Time [s]')
         ax.set_ylabel('Altitude [m]')
         ax.set_title('Altitude vs Time')
